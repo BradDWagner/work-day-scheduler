@@ -70,7 +70,3 @@ textarea {
   transition: all 0.3s ease-in-out;
 }
 
-input{
-  min-height: 100%;
-  margin-top: -32px;
-}
