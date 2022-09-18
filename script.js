@@ -1,4 +1,4 @@
-var currentHour = moment().format("H");
+
 var timeDisplayArea = document.querySelector("#currentDay");
 
 var schedule = {
@@ -13,6 +13,7 @@ var schedule = {
     hour17: ""
 }
 
+//set date and time display to stay up to date
 function displayTime(){
     setInterval(function(){
         var currentTime = moment().format("dddd, MMMM do h:mmA");
@@ -21,37 +22,46 @@ function displayTime(){
 }
 displayTime();
 
-function hourColor(){
+function setStart(){
     for (var i=0; i<9; i++) {
+        //use i to access different form element with each loop
         var timeRow = document.body.children[1].children[i];
+        //access the time corresponding to each form stored in the data attribute on each label
         var timeData = timeRow.children[0].dataset.time;
-        var formInput = timeRow.children[1] //.children[0];
-        var storedSchedule = JSON.parse(localStorage.getItem("mySchedule"));
+        //select corresponding textarea element
+        var formTextArea = timeRow.children[1] 
+        //access the current hour
+        var currentHour = moment().format("H");
 
-
+        //compare the time data stored on each form with the current hour to determine if it is in the past, present, or future
         if (timeData == currentHour) {
-            formInput.classList.add("present");
+            formTextArea.classList.add("present");
         } else if (timeData > currentHour) {
-            formInput.classList.add("future");
+            formTextArea.classList.add("future");
         } else  {
-            formInput.classList.add("past")
+            formTextArea.classList.add("past")
         };
 
-        if(storedSchedule !== null) {       
+        //retrieve schedule data from local storage
+        var storedSchedule = JSON.parse(localStorage.getItem("mySchedule"));
+        if(storedSchedule !== null) {     
+            //access the values stored in the storedSchedule object and assign to corresponding hour  
             var scheduleValues = Object.values(storedSchedule);
-            // formInput.setAttribute("placeholder", scheduleValues[i]);
-            formInput.textContent = scheduleValues[i];
+            formTextArea.textContent = scheduleValues[i];
         }
-
-
     }
-
 }
-hourColor();
+setStart();
 
+//select all button elements on the page and add event listener
 var allButtons = $("button")
 allButtons.on("click",  function(event){
     event.preventDefault();
+
+    //update schedule object with data in localStorage
+    if(JSON.parse(localStorage.getItem("mySchedule") !== null) ){
+        schedule = JSON.parse(localStorage.getItem("mySchedule"));
+    }
 
     //retreive form number from data attribute attached to target button
     var eventData = $(event.target).attr("data-FormNum");
@@ -61,7 +71,7 @@ allButtons.on("click",  function(event){
 
     //set the value of the key corresponding to data attribute in the schedule object to the value of the textarea
     schedule["hour" + eventData] = textAreaEl.val();
-
+  
     //update local storage with updated schedule object
     localStorage.setItem("mySchedule", JSON.stringify(schedule));
 
