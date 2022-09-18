@@ -5,9 +5,9 @@ var schedule = {
     hour9: "",
     hour10: "",
     hour11: "",
-    hour12: "12",
-    hour13: "13",
-    hour14: "14",
+    hour12: "",
+    hour13: "",
+    hour14: "",
     hour15: "",
     hour16: "",
     hour17: ""
@@ -49,24 +49,29 @@ function hourColor(){
 }
 hourColor();
 
-// var allButtons = $("button")
-// allButtons.on("click",  function(event){
-//     event.preventDefault();
-//     var btnClicked = event.target;
-//     var rowClicked = btnClicked.parentElement.children[1].children;
-//     console.log(rowClicked);
-// })
+var allButtons = $("button")
+allButtons.on("click",  function(event){
+    event.preventDefault();
 
-// var input9 = $("#input9")
-// function handleFormSubmit(event) {
-//     event.preventDefault();
-//     console.log(input9.val());
-// }
+    //retreive form number from data attribute attached to target button
+    var eventData = $(event.target).attr("data-FormNum");
 
-var button9 = $("#button9");
-var input9 = $("#input9");
-button9.on("click", function(event) {
-    console.log(input9.val());
-    schedule.hour9 = input9.val();
-    localStorage.setItem("mySchedule", JSON.stringify(schedule) )
+    //select corresponding textarea by using the data attribute
+    var textAreaEl = $("textarea[data-formNum='" + eventData +"'")
+
+    //set the value of the key corresponding to data attribute in the schedule object to the value of the textarea
+    schedule["hour" + eventData] = textAreaEl.val();
+
+    //update local storage with updated schedule object
+    localStorage.setItem("mySchedule", JSON.stringify(schedule));
+
 })
+
+
+// var button9 = $("#button9");
+// var input9 = $("#input9");
+// button9.on("click", function(event) {
+//     console.log(input9.val());
+//     schedule.hour9 = input9.val();
+//     localStorage.setItem("mySchedule", JSON.stringify(schedule) )
+// })
