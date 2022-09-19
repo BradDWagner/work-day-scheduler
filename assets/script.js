@@ -1,6 +1,6 @@
-
+//select area to display time data
 var timeDisplayArea = document.querySelector("#currentDay");
-
+//create object to store input information
 var schedule = {
     hour9: "",
     hour10: "",
@@ -16,12 +16,13 @@ var schedule = {
 //set date and time display to stay up to date
 function displayTime(){
     setInterval(function(){
-        var currentTime = moment().format("dddd, MMMM do h:mmA");
+        var currentTime = moment().format("dddd, MMMM Do h:mmA");
         timeDisplayArea.textContent = currentTime;
     }, 1000);
 }
 displayTime();
 
+//function to cycle through all form elements and set background color according to current time and text data from local storage
 function setStart(){
     for (var i=0; i<9; i++) {
         //use i to access different form element with each loop
