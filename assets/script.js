@@ -79,10 +79,4 @@ allButtons.on("click",  function(event){
 })
 
 
-// var button9 = $("#button9");
-// var input9 = $("#input9");
-// button9.on("click", function(event) {
-//     console.log(input9.val());
-//     schedule.hour9 = input9.val();
-//     localStorage.setItem("mySchedule", JSON.stringify(schedule) )
-// })
+≈
