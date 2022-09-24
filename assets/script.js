@@ -79,4 +79,3 @@ allButtons.on("click",  function(event){
 })
 
 
-≈
